@@ -22,3 +22,13 @@ end
      end
    end
  end
+
+ describe Bike do
+   describe 'broken?' do
+     it 'check return true' do
+       bike = double(:bike)
+       allow(bike).to receive(:broken?).and_return(false)
+       expect(bike.broken?).to eq false
+     end
+   end
+ end

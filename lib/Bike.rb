@@ -2,7 +2,7 @@ class Bike
   def initialize
     @condition = false
   end
-  
+
   def working?
     true
   end

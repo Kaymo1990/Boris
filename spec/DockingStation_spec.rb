@@ -47,6 +47,7 @@ describe DockingStation do
     end
   end
 end
+
 #  it { is_expected.to respond_to(:dock).with(1).argument }
 #  it 'docks some bike' do
 #    bike = Bike.new
@@ -68,7 +69,7 @@ describe DockingStation do
     it 'If dock over 20 is full' do
       station = DockingStation.new
       20.times { station.dock(Bike.new)}
-      expect {station.dock(Bike.new)}.to raise_error 'Full dock'
+      expect {station.dock double(:bike)}.to raise_error 'Full dock'
     end
   end
 end
@@ -89,6 +90,17 @@ describe 'initialize' do
   end
 end
 
+describe DockingStation do
+  describe '#release_bike' do
+    let(:bike) { double :bike }
+    it 'Message of broken bike' do
+      allow(bike).to receive(:broken?).and_return(true)
+      station = DockingStation.new
+      station.dock(bike)
+      expect {station.release_bike}.to raise_error 'Broken bike'
+    end
+  end
+end
 
 #describe DockingStation do
 #it { should respond_to()}
