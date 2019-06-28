@@ -1,4 +1,6 @@
 require './lib/DockingStation.rb'
+require_relative 'master_spec'
+
 describe DockingStation do
   #it { is_expected.to respond_to :release_bike } Check if there is a method
   describe '#release_bike' do
@@ -102,6 +104,21 @@ describe DockingStation do
   end
 end
 
+describe DockingStation do
+  describe 'broken_pickup' do
+    it 'should raise an error that no bikes are broken' do
+      station = DockingStation.new
+      van = Van.new
+      bike = Bike.new
+      station.dock(bike)
+      expect{station.broken_pickup(van)}.to raise_error 'There are no broken bikes here'
+  end
+end
+end
+
+describe DockingStation do
+  it_behaves_like "bike_container"
+end
 #describe DockingStation do
 #it { should respond_to()}
 #end

@@ -1,18 +1,19 @@
 require_relative 'Bike.rb'
+require_relative 'van'
 
 class DockingStation
-attr_reader :bike
+attr_reader :bikes
 DEFAULT_CAPACITY = 20
 
   def initialize(capacity = DEFAULT_CAPACITY)
     @capacity = capacity
-    @bike_dock = []
+    @bikes = []
   end
 
   def release_bike
     if empty?
       raise 'No bikes available'
-    elsif @bike_dock[-1].broken? == true
+    elsif @bikes[-1].broken? == true
       raise "Broken bike"
     else
       bike
@@ -23,7 +24,7 @@ DEFAULT_CAPACITY = 20
     if full?
       raise "Full dock"
     else
-      @bike_dock << bike
+      @bikes << bike
     end
   end
 
@@ -31,10 +32,19 @@ DEFAULT_CAPACITY = 20
     @capacity
   end
 
+  def broken_pickup(van)
+    if @bikes[-1].broken? == true
+      van.load_bike(@bikes[-1])
+      @bikes.delete_at(-1)
+    else
+      raise 'There are no broken bikes here'
+    end
+  end
+
   private
 
   def full?
-    if @bike_dock.count >= DEFAULT_CAPACITY
+    if @bikes.count >= DEFAULT_CAPACITY
       true
     else
       false
@@ -42,12 +52,16 @@ DEFAULT_CAPACITY = 20
   end
 
   def empty?
-    if @bike_dock.count == 0
+    if @bikes.count == 0
       true
     else
       false
     end
   end
+
+
+
+
 
 
 
